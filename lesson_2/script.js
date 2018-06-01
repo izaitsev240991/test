@@ -12,10 +12,9 @@ let mainList = {
 for (let i = 0; i < 5; i++) {
 
 	let a = prompt("Какой тип товаров будем продавать?");
-	mainList.shopGoods[i] = a;
 	if ((typeof(a)) === 'string' && (typeof(a)) != null && a != '' && a.length < 50 ){
 		console.log('Всё верно');
-		
+		mainList.shopGoods[i] = a;
 	} else  {
 		alert('введите товары');
 		i--;
@@ -26,9 +25,9 @@ for (let i = 0; i < 5; i++) {
 // let i = 0;
 // while (i < 5){
 // 	let a = prompt("Какой тип товаров будем продавать?");
-// 	mainList.shopGoods[i] = a;
 // 		if ((typeof(a)) === 'string' && (typeof(a)) != null && a != '' && a.length < 50 ){
 // 			console.log('Всё верно');
+// 			mainList.shopGoods[i] = a;
 // 		} else  {
 // 			alert('введите товары');
 // 			i--;
@@ -39,9 +38,9 @@ for (let i = 0; i < 5; i++) {
 // let i = 0;
 // do {
 // 	let a = prompt("Какой тип товаров будем продавать?");
-// 	mainList.shopGoods[i] = a;
 // 	if ((typeof(a)) === 'string' && (typeof(a)) != null && a != '' && a.length < 50 ){
 // 		console.log('Всё верно');
+// 		mainList.shopGoods[i] = a;
 // 		} else  {
 // 			alert('введите товары');
 // 			i--;
