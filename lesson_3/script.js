@@ -22,7 +22,7 @@ let mainList = {
 	shopGoods: [],
 	employers: {},
 	open: false,
-	discount: true
+	discount: false
 }
 
 function chooseGoods(){
@@ -50,7 +50,7 @@ function workTime(time){
 							console.log('В сутках 24 часа');
 							};
 }
-workTime(time);
+workTime(25);
 
 function dayBudget(){
 	alert("Ваш бюджет на 1 день: " + mainList.budget/30);
@@ -58,16 +58,16 @@ function dayBudget(){
 }
 dayBudget();
 
-function getDiscount(price){
+function getDiscount(discount){
 	
-	if (mainList.discount == true) {
+	if (discount == true) {
 		 price *= .8;
 		 console.log(price);
 		} else{
 			console.log(price);
 			};
 }
-getDiscount(price);
+getDiscount(true);
 
 
 function takeEmployers(){
