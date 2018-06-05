@@ -5,11 +5,12 @@ let money,
  		items
 
 function start(){
-	 money = prompt("Ваш бюджет на месяц?", "");
-
-	 while(isNaN(money) || money == "" || money == null){
+	 do{
 	 	money = prompt("Ваш бюджет на месяц?", "");
 	 }
+	 while(isNaN(money) || money == "" || money == null);
+	 	
+	 
 
 	 name = prompt("Название вашего магазина", "").toUpperCase(); 
 	 
@@ -74,23 +75,22 @@ let mainList = {
 	}
 	},
 	chooseShopItems: function chooseShopItems (){
-		for (let i = 1; i < 2; i++){
-  	let items = prompt("Перечислите через запятую ваши товары", "");
+		let items = null;
+		
+		do{
+			 items = prompt("Перечислите через запятую ваши товары", "");
+			
+		} while((typeof(items)) != 'string' ||  items == '' || items == null); 	
 
-  		if((typeof(items)) === 'string'  && (typeof(items)) != null && items != ''){
-  			mainList.shopItems = items.split(",");
-  			mainList.shopItems.push(prompt("Подождите ещё", ""));
-				mainList.shopItems.sort();
-				mainList.shopItems.forEach(function(item, i, shopItems){
-					alert( "У нас вы можете купить: " + ++i + ") " + item);
-				})
-				for(let key in mainList.shopItems){
-					console.log("Наш магазин включает в себя: " + key + ") " + mainList.shopItems[key])
-				}
-  		} else{
-  				let items = prompt("Перечислите через запятую ваши товары", "");
-  				i--;
-  			};
+		mainList.shopItems = items.split(",");
+		mainList.shopItems.push(prompt("Подождите ещё", ""));
+		mainList.shopItems.sort();
+		mainList.shopItems.forEach(function(item, i, shopItems){
+			alert( "У нас вы можете купить: " + (i + 1) + ") " + item);
+		})
+
+		for(let key in mainList.shopItems){
+			console.log("Наш магазин включает в себя: " + (+key + 1) + ") " + mainList.shopItems[key])
 		}
 
 	}
@@ -98,3 +98,6 @@ let mainList = {
 
 mainList.chooseShopItems();
 console.log(mainList);
+
+
+
