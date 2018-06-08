@@ -11,7 +11,7 @@ function start() {
     while (isNaN(money) || money == "" || money == null);
     name = prompt("Название вашего магазина", "").toUpperCase();
 }
-// start();
+
 
 let mainList = {
     budget: money,
@@ -91,7 +91,7 @@ let mainList = {
     }
 }
 
-mainList.chooseShopItems();
+
 console.log(mainList);
 
 
