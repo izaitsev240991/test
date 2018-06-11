@@ -1,3 +1,4 @@
+
 var budget = prompt("Ваш бюджет на месяц?", "");
 var shopName = prompt("Название вашего магазина", ""); 
 var product1 = prompt("Какой тип товаров будем продавать?", "");
@@ -20,6 +21,3 @@ var mainList = {
 alert("Ваш бюджет на 1 день: " + budget/30);
 
 console.log(mainList.shopGoods);
-
-
-
