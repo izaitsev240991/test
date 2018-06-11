@@ -53,13 +53,14 @@ goodItemBtn.addEventListener('click', () => {
         };
     }
     btnBlock();
+
 });
 
 
 
 chooseItem.addEventListener('change', () => {
     let items = chooseItem.value;
-    if (isNaN(items) && items != '' );{   
+    if (isNaN(items) && items != '' ){   
         mainList.shopItems = items.split(",");
         mainList.shopItems.sort();
         itemsValue.textContent = mainList.shopItems;
@@ -131,6 +132,7 @@ hireEmployersBtn.addEventListener('click', () =>{
 
 
 
+
 let mainList = {
     budget: money,
     shopName: name,
@@ -143,17 +145,20 @@ let mainList = {
 }
 function btnBlock(){
     if (mainList.open === false ){
+        discountBtn.setAttribute('disabled', '');
         goodItemBtn.setAttribute('disabled', '');
         countBudgetBtn.setAttribute('disabled', '');
         hireEmployersBtn.setAttribute('disabled', '');
     }else{
+        discountBtn.removeAttribute('disabled', '');
         goodItemBtn.removeAttribute('disabled', '');
         countBudgetBtn.removeAttribute('disabled', '');
         hireEmployersBtn.removeAttribute('disabled', '');
-    }
-   
+    } 
 }
+
 btnBlock();
+
 console.log(mainList);
 
 
