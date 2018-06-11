@@ -14,65 +14,51 @@ let open = document.getElementById('open-btn'),
     employersValue = mainInfo.getElementsByClassName('employers-value')[0],
     discount = mainInfo.getElementsByClassName('discount')[0],
     discountValue = mainInfo.getElementsByClassName('discount-value')[0],
-    discountYes = mainInfo.querySelectorAll('.discount-value_yes')[0],
-    discountNo = mainInfo.querySelectorAll('.discount-value_no')[0],
+    discountBtn = mainInfo.getElementsByTagName('button')[0],
     isOpen = mainInfo.getElementsByClassName('isopen')[0],
     isOpenValue = mainInfo.getElementsByClassName('isopen-value')[0],
     goodItem = mainFunctions.getElementsByClassName('goods-item'),
-    btn = mainFunctions.getElementsByTagName('button'),
+    goodItemBtn = mainFunctions.getElementsByTagName('button')[0],
+    countBudgetBtn = mainFunctions.getElementsByTagName('button')[1],
+    hireEmployersBtn = mainFunctions.getElementsByTagName('button')[2],
     chooseItem = mainFunctions.querySelector('.choose-item'),
     timeValue = mainFunctions.querySelector('.time-value'),
     countBudgetValue = mainFunctions.querySelector('.count-budget-value'),
     hireEmployersItem = mainFunctions.querySelectorAll('.hire-employers-item')
     
-let money;
+let money,
+    price;
 
 open.addEventListener('click', () => {
     do {
         money = prompt("Ваш бюджет на месяц?", "");
     }
     while (isNaN(money) || money == "" || money == null);
-    budgetValue.textContent = money;
+    budgetValue.value = money;
     nameValue.textContent = prompt("Название вашего магазина", "").toUpperCase();
+    mainList.open = true;
+    btnBlock();
 });
 
-btn[0].addEventListener('click', () => {
+goodItemBtn.addEventListener('click', () => {
     for (let i = 0; i < goodItem.length; i++) {
         let a = goodItem[i].value;
-        if ((typeof(a)) === 'string' && (typeof(a)) != null  && a.length < 50) {
+        if ((typeof(a)) === 'string' && (typeof(a)) != null  && a.length < 50 ) {
             console.log('Всё верно');
             mainList.shopGoods[i] = a;
             goodsValue.textContent = mainList.shopGoods;
-        } else {
+
+        } else {  
             i = i - 1;
         };
     }
+    btnBlock();
 });
 
-discountYes.addEventListener('click', () =>{
 
-    discountYes.style.display = 'none';
-    discountNo.style.display = 'none';
-    discountValue.style.display = 'block';
-    discountValue.style.padding = '10px';
-    discountValue.style.textAlign = 'left';
-    discountValue.style.backgroundColor = 'green';
-    discountValue.textContent = 'ваш бюджет по скидке : ' + (money *= .8);
-});
-discountNo.addEventListener('click', () =>{
-    discountYes.style.display = 'none';
-    discountNo.style.display = 'none';
-    discountValue.style.backgroundColor = 'red';
-    discountValue.style.padding = '10px';
-    discountValue.style.textAlign = 'left'
-    discountValue.textContent = 'Дисконтная система отключена';
-});
 
 chooseItem.addEventListener('change', () => {
     let items = chooseItem.value;
-
-    
-
     if (isNaN(items) && items != '' );{   
         mainList.shopItems = items.split(",");
         mainList.shopItems.sort();
@@ -86,15 +72,20 @@ timeValue.addEventListener('change', () =>{
     if (time < 0) {
         console.log('Такого не может быть');
          mainList.open = false;
+         btnBlock();
     } else if (time > 8 && time < 20) {
         console.log('Рабочее время');
         mainList.open = true;
+        btnBlock();
+        
     } else if (time < 24) {
         console.log('Уже слишком поздно');
         mainList.open = false;
+        btnBlock();
     } else {
         console.log('В сутках 24 часа');
         mainList.open = false;
+        btnBlock();
     };
 
     if( mainList.open == true){
@@ -105,12 +96,14 @@ timeValue.addEventListener('change', () =>{
 
 });
 
-btn[1].addEventListener('click', () =>{
+countBudgetBtn.addEventListener('click', () =>{
     countBudgetValue.value = money / 30;
 
 });
 
-btn[2].addEventListener('click', () =>{
+countBudgetValue.setAttribute('disabled', '');
+
+hireEmployersBtn.addEventListener('click', () =>{
     for (let i = 0; i < hireEmployersItem.length; i++) {
         let name = hireEmployersItem[i].value;
         mainList.employers[i] = name;
@@ -118,6 +111,25 @@ btn[2].addEventListener('click', () =>{
         employersValue.textContent += mainList.employers[i] + ', ';
     }
 });
+ discountBtn.addEventListener('click', () =>{
+   price = budgetValue.value;
+   if (mainList.discount) {
+    mainList.discount = false;
+    discountBtn.textContent = "Вкл скидку";
+    discount.style.backgroundColor = 'red';
+    discountValue.textContent = price;
+   
+   } else{
+    mainList.discount = true;
+    discountBtn.textContent = "Выкл скидку";
+    discount.style.backgroundColor = 'green';
+    discountValue.textContent = price *= .8;
+   }
+  
+ });
+
+
+
 
 let mainList = {
     budget: money,
@@ -128,20 +140,20 @@ let mainList = {
     discount: false,
     shopItems: [],
     
-    getDiscount: function getDiscount(discount) {
-
-        if (discount == true) {
-            price *= .8;
-            console.log(price);
-        } else {
-            console.log(price);
-        };
-    },
-   
+}
+function btnBlock(){
+    if (mainList.open === false ){
+        goodItemBtn.setAttribute('disabled', '');
+        countBudgetBtn.setAttribute('disabled', '');
+        hireEmployersBtn.setAttribute('disabled', '');
+    }else{
+        goodItemBtn.removeAttribute('disabled', '');
+        countBudgetBtn.removeAttribute('disabled', '');
+        hireEmployersBtn.removeAttribute('disabled', '');
+    }
    
 }
-
-
+btnBlock();
 console.log(mainList);
 
 

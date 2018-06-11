@@ -101,7 +101,7 @@ body {
 .main-info .employers,
 .main-info .employers-value,
 .main-info .discount,
-.main-info .discount-value,
+
 .main-info .isopen,
 .main-info .isopen-value {
   width: 48%;
@@ -110,26 +110,28 @@ body {
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.8);
 }
-.main-info .isopen-value,
-.main-info .discount-value {
-  padding: 0;
-  text-align: center;
-  display: flex;
-  align-items: center;  
-}
-
-.main-info .discount-value_yes{
-  
-  width: 50%;
-  padding: 10px 10px;
-  background-color: green;
-}
-.main-info .discount-value_no{
-  
-  width: 50%;
-  padding: 10px 10px;
+.main-info .isopen-value{
   background-color: red;
 }
+.main-info .discount{
+  background-color: red;
+}
+.main-info .discount-system{
+  display: flex;
+  justify-content: space-between;
+  width: 48%;
+  margin-top: 10px;
+  min-height: 40px;  
+}
+.main-info .discount-value{
+  width: 55%;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}
+.main-info .toggle-discount{
+
+}
+
 .main-functions {
   width: 550px;
   min-height: 500px;
