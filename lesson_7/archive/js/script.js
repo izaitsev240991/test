@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    info.addEventListener('click', function(event) {
+    info.addEventListener('click', (event) => {
         let target = event.target;
         if (target.className == 'info-header-tab') {
             for (let i = 0; i < tab.length; i++) {
