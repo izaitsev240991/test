@@ -10,7 +10,7 @@ $(document).ready(function(){
  	$('.modal').slideDown('slow');
  });
 
- $('li:nth-child(2)').on('click', function(){
+ $('.main_nav ul li:eq(1)').on('click', function(){
  	$('.overlay').fadeToggle('slow');
  	$('.modal').slideDown('slow');
  });
