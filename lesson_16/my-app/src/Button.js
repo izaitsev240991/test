@@ -10,7 +10,7 @@ class Button extends React.Component{
 	}
 
 	myClick(){
-		document.getElementsByClassName('wrapper')[0].style.backgroundColor = "#F9F5A6FF";
+		document.getElementsByClassName('wrapper')[0].style.backgroundColor = "#F9F5A6";
 	}
 
 	render(){
