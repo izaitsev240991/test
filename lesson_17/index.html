@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="style.css">
+		<title>Урок 17</title>
+ </head>
+
+    <body>
+    	<div class="progress-top"></div>
+    	<div class="progress-right"></div>
+    	<div class="progress-bottom"></div>
+    	<div class="progress-left"></div>
+      <!-- scroll -->
+
+
+    	<div class="tabs">
+
+    	  <ul class="tabs__caption">
+    	    <li class="active">слайдер</li>
+    	    <li>калькулятор</li>
+    	    <li>игра</li>
+    	  </ul>
+
+    	  <div class="tabs__content active">
+    	    <div class="galleria">
+            <img src="photo1.jpg">
+            <img src="photo2.jpg">
+            <img src="photo3.jpg">
+        </div>
+    	  </div>
+
+    	  <div class="tabs__content calc_page">
+    	    <p class="warning">Don't divide by zero</p>
+
+    	    <div id="calculator" class="calculator">
+
+    	      <button id="clear" class="clear">C</button>
+
+    	      <div id="viewer" class="viewer">0</div>
+
+    	      <button class="num" data-num="7">7</button>
+    	      <button class="num" data-num="8">8</button>
+    	      <button class="num" data-num="9">9</button>
+    	      <button data-ops="plus" class="ops">+</button>
+
+    	      <button class="num" data-num="4">4</button>
+    	      <button class="num" data-num="5">5</button>
+    	      <button class="num" data-num="6">6</button>
+    	      <button data-ops="minus" class="ops">-</button>
+
+    	      <button class="num" data-num="1">1</button>
+    	      <button class="num" data-num="2">2</button>
+    	      <button class="num" data-num="3">3</button>
+    	      <button data-ops="times" class="ops">*</button>
+
+    	      <button class="num" data-num="0">0</button>
+    	      <button class="num" data-num=".">.</button>
+    	      <button id="equals" class="equals" data-result="">=</button>
+    	      <button data-ops="divided by" class="ops">/</button>
+    	    </div>
+
+    	    <button id="reset" class="reset">Reset Universe?</button>
+    	  </div>
+
+    	  <div class="tabs__content tab_body">
+    	     <div class="init">
+    	         <div class="center1">
+    	             <h1>WE NEED YOU!</h1>
+    	             <p>Click on each square to plant a tree. You must hurry or the factories will colonize us!</p>
+    	             <p class="floating bold">START GAME</p>
+    	         </div>
+    	     </div>
+    	     <div class="won">
+    	         <div class="center">
+    	             <h1>YOU WON!</h1>
+    	             <p class="floating replay bold">save the World again</p>
+    	         </div>
+    	     </div>
+    	     <div class="init hidden"><h1 class="center">INCREASED VELOCITY!</h1></div>
+    	    <!-- <h2 class="counter">Level: 1</h2> -->
+    	     <div class="container">
+    	         <div class="game"></div>
+    	     </div>  
+				</div>
+    	</div>
+
+    	<!-- .tabs-->
+
+        
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    		<script src="galleria/galleria-1.5.7.min.js"></script>
+
+        <script>
+	(function() { 
+            Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+            Galleria.configure({
+						    transition: 'slide',
+						    imageCrop: true,
+						    height: 700,
+						    width: 900,
+						    autoplay: 3000,
+						    lightbox: true
+						});
+            Galleria.run('.galleria');
+        }());
+        </script>
+        <script>
+        	(function($) {
+        	$(function() {
+
+        	  $('ul.tabs__caption').on('click', 'li:not(.active)', function() {
+        	    $(this)
+        	      .addClass('active').siblings().removeClass('active')
+        	      .closest('div.tabs').find('div.tabs__content').removeClass('active').eq($(this).index()).addClass('active');
+        	  });
+
+        	});
+        	})(jQuery);
+
+        </script>
+
+        <script>
+        	// Progress Scroll
+        	const ProgressScroll = (() => {
+        	  let s;
+
+        	  return {
+        	    settings() {
+        	      return {
+        	        top: $('.progress-top'),
+        	        right: $('.progress-right'),
+        	        bottom: $('.progress-bottom'),
+        	        left: $('.progress-left'),
+        	        windowHeight: $(window).height(),
+        	        windowWidth: $(window).width(),
+        	        scrollHeight: $(document).height() - $(window).height(),
+        	        progressTotal: $(window).height() * 2 + $(window).width() * 2,
+        	        scrollPosition: $(document).scrollTop()
+        	      };
+        	    },
+
+        	    init() {
+        	      s = this.settings();
+        	      this.bindEvents();
+        	    },
+
+        	    bindEvents() {
+        	      $(window).on('scroll', this.onScroll);
+        	      $(window).on('resize', this.onResize);
+
+        	      this.progress();
+        	    },
+
+        	    onScroll() {
+        	      s.scrollPosition = $(document).scrollTop();
+
+        	      ProgressScroll.requestTick();
+        	    },
+
+        	    onResize() {
+        	      s.windowHeight = $(window).height();
+        	      s.windowWidth = $(window).width();
+        	      s.scrollHeight = $(document).height() - s.windowHeight;
+        	      s.progressTotal = s.windowHeight * 2 + s.windowWidth * 2;
+
+        	      ProgressScroll.requestTick();
+        	    },
+
+        	    requestTick() {
+        	      requestAnimationFrame(this.progress);
+        	    },
+
+        	    progress() {
+        	      const percentage = s.scrollPosition / s.scrollHeight;
+        	      const width = s.windowWidth / s.progressTotal;
+        	      const height = s.windowHeight / s.progressTotal;
+
+        	      s.top.css('width', `${(percentage / width) * 100}%`);
+        	      s.right.css('height', `${((percentage - width) / height) * 100}%`);
+        	      s.bottom.css('width', `${((percentage - width - height) / width) * 100}%`);
+        	      s.left.css('height', `${((percentage - width - height - width) / height) * 100}%`);
+        	    }
+        	  };
+        	})();
+
+        	// Init
+        	$(() => {
+        	  ProgressScroll.init();
+        	});
+        </script>
+  
+  <script>
+  	/*
+  	TODO:
+  	    Limit number input
+  	    Disallow . from being entered multiple times
+  	    Clean up structure
+  	*/
+
+  	(function() {
+  	  "use strict";
+
+  	  // Shortcut to get elements
+  	  var el = function(element) {
+  	    if (element.charAt(0) === "#") { // If passed an ID...
+  	      return document.querySelector(element); // ... returns single element
+  	    }
+
+  	    return document.querySelectorAll(element); // Otherwise, returns a nodelist
+  	  };
+
+  	  // Variables
+  	  var viewer = el("#viewer"), // Calculator screen where result is displayed
+  	    equals = el("#equals"), // Equal button
+  	    nums = el(".num"), // List of numbers
+  	    ops = el(".ops"), // List of operators
+  	    theNum = "", // Current number
+  	    oldNum = "", // First number
+  	    resultNum, // Result
+  	    operator; // Batman
+
+  	  // When: Number is clicked. Get the current number selected
+  	  var setNum = function() {
+  	    if (resultNum) { // If a result was displayed, reset number
+  	      theNum = this.getAttribute("data-num");
+  	      resultNum = "";
+  	    } else { // Otherwise, add digit to previous number (this is a string!)
+  	      theNum += this.getAttribute("data-num");
+  	    }
+
+  	    viewer.innerHTML = theNum; // Display current number
+
+  	  };
+
+  	  // When: Operator is clicked. Pass number to oldNum and save operator
+  	  var moveNum = function() {
+  	    oldNum = theNum;
+  	    theNum = "";
+  	    operator = this.getAttribute("data-ops");
+
+  	    equals.setAttribute("data-result", ""); // Reset result in attr
+  	  };
+
+  	  // When: Equals is clicked. Calculate result
+  	  var displayNum = function() {
+
+  	    // Convert string input to numbers
+  	    oldNum = parseFloat(oldNum);
+  	    theNum = parseFloat(theNum);
+
+  	    // Perform operation
+  	    switch (operator) {
+  	      case "plus":
+  	        resultNum = oldNum + theNum;
+  	        break;
+
+  	      case "minus":
+  	        resultNum = oldNum - theNum;
+  	        break;
+
+  	      case "times":
+  	        resultNum = oldNum * theNum;
+  	        break;
+
+  	      case "divided by":
+  	        resultNum = oldNum / theNum;
+  	        break;
+
+  	        // If equal is pressed without an operator, keep number and continue
+  	      default:
+  	        resultNum = theNum;
+  	    }
+
+  	    // If NaN or Infinity returned
+  	    if (!isFinite(resultNum)) {
+  	      if (isNaN(resultNum)) { // If result is not a number; set off by, eg, double-clicking operators
+  	        resultNum = "You broke it!";
+  	      } else { // If result is infinity, set off by dividing by zero
+  	        resultNum = "Look at what you've done";
+  	        el('#calculator').classList.add("broken"); // Break calculator
+  	        el('#reset').classList.add("show"); // And show reset button
+  	      }
+  	    }
+
+  	    // Display result, finally!
+  	    viewer.innerHTML = resultNum;
+  	    equals.setAttribute("data-result", resultNum);
+
+  	    // Now reset oldNum & keep result
+  	    oldNum = 0;
+  	    theNum = resultNum;
+
+  	  };
+
+  	  // When: Clear button is pressed. Clear everything
+  	  var clearAll = function() {
+  	    oldNum = "";
+  	    theNum = "";
+  	    viewer.innerHTML = "0";
+  	    equals.setAttribute("data-result", resultNum);
+  	  };
+
+  	  /* The click events */
+
+  	  // Add click event to numbers
+  	  for (var i = 0, l = nums.length; i < l; i++) {
+  	    nums[i].onclick = setNum;
+  	  }
+
+  	  // Add click event to operators
+  	  for (var i = 0, l = ops.length; i < l; i++) {
+  	    ops[i].onclick = moveNum;
+  	  }
+
+  	  // Add click event to equal sign
+  	  equals.onclick = displayNum;
+
+  	  // Add click event to clear button
+  	  el("#clear").onclick = clearAll;
+
+  	  // Add click event to reset button
+  	  el("#reset").onclick = function() {
+  	    window.location = window.location;
+  	  };
+
+  	}());
+  </script>
+  <script>
+  	console.clear();
+
+  	const line = document.getElementById('line');
+  	const rightHandle = document.getElementById('rightHandle');
+  	const leftHandle = document.getElementById('leftHandle');
+
+  	
+  </script>
+
+<script>
+	const game = document.querySelector('.game');
+	var arrFactory = [];
+	var arrTree = [];
+	var newFactory;
+	var interval = 800;
+	//var counter = 1;
+
+	function createGame() {
+	    for (let i = 0; i < 30; i++) {
+	        let a = document.querySelector('.game');
+	        let b = document.createElement('div');
+	        b.classList.add('box');
+	        b.setAttribute('data-value', i);
+	        a.appendChild(b);   
+	    }
+	    
+	}
+
+	function replay() {
+	    var replay = document.querySelector('.replay');
+	    replay.addEventListener('click', function() {
+	        box.forEach(function(box) {
+	            box.classList.remove('green');
+	            box.classList.remove('tree');
+
+	        });
+	        //counter += 1;
+	        //document.querySelector('.counter').innerHTML = 'Level: ' + counter;
+	        document.querySelector('.hidden').classList.add('levelUp')
+	        let bang = document.querySelector('.won');
+	        newFactory = setInterval(randomFactory, 600);
+	        bang.style.animation = 'start .6s ease-in-out';
+	        bang.style.top = '100%';
+	    });
+	}
+
+	function addTree(e) {
+	    let c = e.target;
+	    
+	    if(arrTree.indexOf(c.dataset.value) == -1) {
+	        arrTree.push(c.dataset.value);
+	        if(arrTree.length == 30) {
+	            clearInterval(newFactory);
+	            
+	            document.querySelector('.hidden').classList.remove('levelUp');
+	            let bang = document.querySelector('.won');
+	            bang.style.animation = 'won .6s ease-in-out';
+	            bang.style.top = '30%';
+	            replay();
+	        }
+	    } 
+	    
+
+	    if(arrFactory.indexOf(c.dataset.value) != -1) {
+	        arrFactory.splice(arrFactory.indexOf(c.dataset.value) ,1);
+	    }
+	    c.classList.remove('red');
+	    c.classList.remove('factory');
+	    c.classList.add('green');
+	    c.classList.add('tree');
+	    console.log(arrTree);
+	}
+
+	function randomFactory() {
+	    let e = Math.random() * 30;
+	    let g = Math.floor(e);
+	    
+	    if(arrFactory.indexOf(box[g].dataset.value) == -1) {
+	        arrFactory.push(box[g].dataset.value);
+	        box[g].classList.add('red');
+	        box[g].classList.remove('green');
+	        box[g].classList.add('factory');
+	        if(arrFactory.length == 30) {
+	            clearInterval(newFactory);
+	        }
+	    } 
+	    
+	    if(arrTree.indexOf(box[g].dataset.value) != -1) {
+	        arrTree.splice(arrTree.indexOf(box[g].dataset.value), 1);
+	    }
+	    console.log(arrFactory);
+	}
+
+	var yol = document.querySelector('.yolo');
+
+	createGame();
+
+	var box = document.querySelectorAll('.box');
+	// console.log(box);
+	var start = document.querySelector('.floating');
+	start.addEventListener('click', function() {
+	    let init = document.querySelector('.init');
+	    init.style.animation = 'start .5s ease-in';
+	    init.style.top = '100%';
+	    newFactory = setInterval(randomFactory, interval);
+	});
+
+	box.forEach(function(box) {
+	    box.addEventListener('click', addTree, false);
+	}, false);
+
+	function fire(e) {
+	    console.log(e.target);
+	    let trg = e.target;
+	    
+	    const itemDim = this.getBoundingClientRect(),
+	    itemSize = {
+	      x: itemDim.right - itemDim.left,
+	      y: itemDim.bottom - itemDim.top,
+	    };
+	    
+	    let burst = new mojs.Burst({
+	        left: itemDim.left + (itemSize.x/2),
+	        top: itemDim.top + (itemSize.y/1.7),
+	        count: 9,
+	        radius: {50 : 90},
+	    });
+	    burst.play();
+	};
+
+
+	box.forEach(function(box) {
+	    box.addEventListener('click', fire);
+	});
+</script>
+	</body>
+</html>
