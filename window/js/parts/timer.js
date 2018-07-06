@@ -5,13 +5,13 @@ function timer(){
 	function StartCountDown(myDiv, myTargetDate) {
 	    var dthen = new Date(myTargetDate);
 	    var dnow = new Date();
-	    ddiff = new Date(dthen - dnow);
-	    gsecs = Math.floor(ddiff.valueOf() / 1000);
+	    var ddiff = new Date(dthen - dnow);
+	    var gsecs = Math.floor(ddiff.valueOf() / 1000);
 	    CountBack(myDiv, gsecs);
 	}
 
 	function Calcage(secs, num1, num2) {
-	    s = ((Math.floor(secs / num1)) % num2).toString();
+	    var s = ((Math.floor(secs / num1)) % num2).toString();
 	    if (s.length < 2) {
 	        s = "0" + s;
 	    }

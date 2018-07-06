@@ -75,5 +75,6 @@ function tabs(){
 	        addDecActive(this);
 	    });
 	}
+
 }
 module.exports = tabs;
