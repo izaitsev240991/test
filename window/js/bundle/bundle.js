@@ -54,6 +54,8 @@
                 statusMessage = document.createElement('div'),
                 phoneInput = document.getElementsByName('user_phone');
 
+            
+
             var _loop = function _loop(i) {
                 phoneInput[i].addEventListener('keyup', function() {
                     phoneInput[i].value = phoneInput[i].value.replace(/[^\d]/g, '');
