@@ -162,10 +162,31 @@
                     }
                 }
             });
-
+           
+            
+                    
+            
             for (var i = 0; i < calcBtn.length; i++) {
                 calcBtn[i].addEventListener('click', function() {
                     modalCalc.style.display = 'block';
+                    if(width.value == '' || height.value == ''){
+                 		      forthBtn.setAttribute('disabled', '');
+                 		        }
+                 			width.addEventListener('change',function(){
+												if(width.value == '' || height.value == ''){
+                 		        	forthBtn.setAttribute('disabled', '');
+                 		        }else{
+                 		        	forthBtn.removeAttribute('disabled', '');
+                 		        }
+                 			});
+                 			height.addEventListener('change',function(){
+												if(height.value == '' || width.value == ''){
+                 		        	forthBtn.setAttribute('disabled', '');
+                 		        }else{
+                 		        	forthBtn.removeAttribute('disabled', '');
+                 		        }
+                 			});
+                 			
                 });
             }
 
@@ -179,14 +200,24 @@
             closeCalcEnd.addEventListener('click', function() {
                 modalCalcLast.style.display = 'none';
             });
-
+            
             forthBtn.addEventListener('click', function() {
                 modalCalc.style.display = 'none';
                 modalCalcProf.style.display = 'block';
                 dataObj.width = width.value;
                 dataObj.height = height.value;
-            });
+                
 
+            });
+            if (dataObj.warm == false && dataObj.cold == false){
+            	forthSecBtn.setAttribute('disabled', '');
+            }
+            warm.addEventListener('click',function(){
+            	forthSecBtn.removeAttribute('disabled', '');
+            });
+            cold.addEventListener('click',function(){
+            	forthSecBtn.removeAttribute('disabled', '');
+            });
             forthSecBtn.addEventListener('click', function() {
                 modalCalcProf.style.display = 'none';
                 modalCalcLast.style.display = 'block';
@@ -196,6 +227,8 @@
                 } else if (cold.checked) {
                     dataObj.cold = true;
                 }
+
+
             });
 
             // форма калькулятора:
